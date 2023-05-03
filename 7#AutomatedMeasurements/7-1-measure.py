@@ -11,7 +11,7 @@ def adc():
         level += 2**i
         GPIO.output(dac, dectobin(level))
         time.sleep(0.01)
-        comp_val = GPIO.input(comp)
+        comp_val  = GPIO.input(comp)
         if (comp_val == 0):
             level -= 2**i
     return level
@@ -49,7 +49,7 @@ try:
         num2_dac_leds(val)
         data_volts.append(val)
         data_times.append(time.time() - start_time)
-    
+
     GPIO.output(troyka, 1)
 
     while(val > 64):
@@ -58,10 +58,10 @@ try:
         num2_dac_leds(val)
         data_volts.append(val)
         data_times.append(time.time() - start_time)
-    
+
     end_time = time.time()
 
-    with open("settings.txt", "w") as file:
+    with open("./settings.txt", "w") as file:
         file.write(str((end_time - start_time) / len(data_volts)))
         file.write(("\n"))
         file.write(str(maxV / 256))
@@ -73,8 +73,8 @@ finally:
     GPIO.output(troyka, GPIO.LOW)
     GPIO.cleanup()
 
-data_volts_str = [str(item) for item in data_volts]
 data_times_str = [str(item) for item in data_times]
+data_volts_str = [str(item) for item in data_volts]
 
 with open("data.txt", "w") as file:
     file.write("\n".join(data_volts_str))
